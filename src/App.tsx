@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
 
+type TodoObject = {
+  value: string
+}
+
 const App: React.FC = () => {
+  const [todo, updateTodo] = useState<Array<TodoObject>>([])
+
+  function addTodo() {
+    updateTodo([...todo, {value: 'test'}])
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="App">
+      <div>
+        {!todo.length ? (<p>Nothing to do here</p>) :
+          todo.map(el => <li key={el.value}>{el.value}</li>)
+        }
+      </div>
+      <button onClick={addTodo}>Add Todo</button>
+    </main>
   );
 }
 
