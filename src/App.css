@@ -1,7 +1,52 @@
---root {
+:root {
   --darkGreen: #263056;
   --green: #9fb3ac;
   --egg: #fbe4b7;
   --lightYellow: #f9f6e7;
   --coral: #b46647;
+}
+
+.card {
+  margin: 20px auto;
+  max-width: calc(100vw - 66%);
+  background: var(--egg);
+  color: var(--green);
+  padding: 40px 20px;
+}
+
+.card .button {
+  background-color: var(--coral);
+  border: none;
+  color: inherit;
+  outline: none;
+  padding: 12px 40px 10px;
+  position: relative;
+}
+
+.button:before,
+.button:after {
+  border: 0 solid transparent;
+  transition: all 0.25s;
+  content: "";
+  height: 24px;
+  position: absolute;
+  width: 24px;
+}
+.button:before {
+  border-top: 2px solid #c47135;
+  left: 0px;
+  top: -5px;
+}
+.button:after {
+  border-bottom: 2px solid #c47135;
+  bottom: -5px;
+  right: 0px;
+}
+.button:hover {
+  background-color: #c47135;
+}
+.button:hover:before,
+.button:hover:after {
+  height: 100%;
+  width: 100%;
 }

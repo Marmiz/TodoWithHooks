@@ -1,26 +1,42 @@
-import React, {useState} from 'react';
-import './App.css';
+import React, { useState} from "react";
+import Row from "./components/Row";
+import Col from "./components/Col";
+import ControlledInput from "./components/ControlledInput";
+import "./App.css";
 
 type TodoObject = {
-  value: string
-}
+  value: string;
+};
 
 const App: React.FC = () => {
-  const [todo, updateTodo] = useState<Array<TodoObject>>([])
+  const [todoList, updateTodoList] = useState<Array<TodoObject>>([]);
+  const [todoVal, changeTodoVal] = useState('');
+
+  function onChangeTodoVal(newVal: string | null) {
+    if(!newVal) {
+      return changeTodoVal('')
+    }
+    changeTodoVal(newVal);
+  }
 
   function addTodo() {
-    updateTodo([...todo, {value: 'test'}])
+    updateTodoList([...todoList, { value: todoVal }]);
   }
   return (
-    <main className="App">
-      <div>
-        {!todo.length ? (<p>Nothing to do here</p>) :
-          todo.map(el => <li key={el.value}>{el.value}</li>)
-        }
-      </div>
-      <button onClick={addTodo}>Add Todo</button>
+    <main className="card">
+      <Row>
+        <Col size={7}>
+        <ControlledInput value={todoVal} onChange={onChangeTodoVal} placeholder="What are you up to, today?"/>
+        </Col>
+        <Col size={3}>
+          <button className="button" onClick={addTodo}>Add Todo</button>
+        </Col>
+      </Row>
+      {todoList.length > 0 && (
+        todoList.map(td => <Row key={td.value}>{td.value}</Row>)
+      )}
     </main>
   );
-}
+};
 
 export default App;
