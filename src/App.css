@@ -4,6 +4,8 @@
   --egg: #fbe4b7;
   --lightYellow: #f9f6e7;
   --coral: #b46647;
+  --lightBg: rgba(240, 240, 240, 0.8);
+  --darkBg: rgba(0,0,0,0.8);
 }
 
 .card {

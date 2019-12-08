@@ -11,7 +11,14 @@ type InputProps = {
 };
 
 export default function ControlledInput(props: InputProps) {
-  return <input type={props.type} value={props.value} onChange={event => props.onChange(event.currentTarget.value)}/>;
+  return (
+    <input
+      type={props.type}
+      value={props.value}
+      onChange={event => props.onChange(event.currentTarget.value)}
+      placeholder={props.placeholder}
+    />
+  );
 }
 
 ControlledInput.defaultProps = {
