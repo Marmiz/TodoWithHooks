@@ -1,0 +1,17 @@
+.header {
+  grid-area: header;
+  display: grid;
+  grid-template-columns: 20% auto 20%;
+  grid-template-areas: "begin center end";
+}
+
+.header__center {
+  grid-area: center;
+  align-self: center;
+}
+
+.header__end{
+  grid-area: end;
+  align-self: center;
+  display: flex;
+}

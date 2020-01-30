@@ -7,6 +7,7 @@ type ThemeContext = { theme: Theme; toggleTheme: () => void };
 type ThemeObject = {
     background: string,
     cardBg: string,
+    color: string
 };
 type Themes = {
     [key: string]: ThemeObject
@@ -16,10 +17,12 @@ const themes: Themes = {
   light: {
     background: "var(--lightBg)",
     cardBg: "var(--egg)",
+    color: "var(--darkGreen)",
   },
   dark: {
     background: "var(--darkBg)",
     cardBg: "var(--egg)",
+    color: "var(--green)"
   }
 };
 
@@ -36,7 +39,9 @@ export const ThemeProvider: React.FC = ({ children }) => {
   };
 
   const bg = themes[theme].background;
+
   document.body.style.backgroundColor = bg;
+  document.body.style.color = themes[theme].color
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}

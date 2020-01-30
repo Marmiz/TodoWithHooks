@@ -1,17 +1,21 @@
-:root {
-  --darkGreen: #263056;
-  --green: #9fb3ac;
-  --egg: #fbe4b7;
-  --lightYellow: #f9f6e7;
-  --coral: #b46647;
-  --lightBg: rgba(240, 240, 240, 0.8);
-  --darkBg: rgba(0,0,0,0.8);
+/*
+  CSS grid to define basic layout of our page
+  header
+  main card / todo
+  footer
+*/
+.main {
+  display: grid;
+  grid-template-columns: 20vw 60vw 20vw;
+  grid-template-rows: 10vh 80vh 10vh;
+  grid-template-areas:
+    "header header header"
+    ". main ."
+    "footer footer footer";
 }
 
 .card {
-  margin: 20px auto;
-  max-width: calc(100vw - 66%);
-  background: var(--egg);
+  grid-area: main;
   color: var(--green);
   padding: 40px 20px;
 }
