@@ -4,14 +4,15 @@ import ControlledInput from "../ControlledInput";
 type TodoProps = {
   id: number;
   value?: string;
+  onChange: (target: HTMLInputElement) => void
 };
 
-function Todo({ id, value }: TodoProps) {
+function Todo({ id, value, onChange }: TodoProps) {
   return (
     <ControlledInput
       id={`${id}`}
       value={value}
-      onChange={() => console.log("v")}
+      onChange={onChange}
     />
   );
 }

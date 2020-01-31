@@ -7,8 +7,8 @@ type InputProps = {
   readOnly: boolean;
   defaultValue: string;
   placeholder: string;
-  onChange: (value: string | null) => void;
-  id?: string
+  onChange: (target: HTMLInputElement) => void;
+  id: string
 };
 
 export default function ControlledInput(props: InputProps) {
@@ -17,7 +17,7 @@ export default function ControlledInput(props: InputProps) {
       <input
         type={props.type}
         value={props.value}
-        onChange={event => props.onChange(event.currentTarget.value)}
+        onChange={event => props.onChange(event.currentTarget)}
         placeholder={props.placeholder}
         id={props.id}
       />

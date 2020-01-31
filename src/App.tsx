@@ -14,16 +14,30 @@ type TodoObject = {
 };
 
 const App: React.FC = () => {
-  const [todoVal, changeTodoVal] = useState("");
   const { theme } = useContext(ThemeContext);
+  const [inputVal, updateInput] = useState("");
+  const [todoList, updateTodoList] = useUpdateTodo(inputVal, updateInput);
 
-  const [todoList, addTodo] = useUpdateTodo(todoVal, changeTodoVal);
+  function handleInputChange(target: HTMLInputElement) {
+    updateInput(target.value)
+  }
 
-  function onChangeTodoVal(newVal: string | null) {
-    if (!newVal) {
-      return changeTodoVal("");
+  function handleTodoChange(target: HTMLInputElement) {
+    const val = target.value;
+    const id = parseInt(target.id, 10);
+
+    if(val === '' && id !== -1) {
+      const newList = todoList.filter(td => td.id !== id)
+      return updateTodoList(newList)
     }
-    changeTodoVal(newVal);
+
+    const newList = todoList.map(td => {
+      if (td.id !== id) return td;
+
+      return Object.assign(td, { value: val });
+    });
+
+    updateTodoList(newList);
   }
 
   const themeObj = getTheme(theme);
@@ -34,31 +48,29 @@ const App: React.FC = () => {
         <Row>
           <Col size={9}>
             <ControlledInput
-              value={todoVal}
-              onChange={onChangeTodoVal}
+              value={inputVal}
+              onChange={handleInputChange}
               placeholder="What are you up to, today?"
+              id="-1"
             />
-          </Col>
-          <Col size={3}>
-            <button className="button" onClick={addTodo}>
-              Add Todo
-            </button>
           </Col>
         </Row>
         {todoList.length > 0 &&
-          todoList.map(td => <Todo key={td.id} id={td.id} value={td.value} />)}
+          todoList.map(td => (
+            <Todo
+              key={td.id}
+              id={td.id}
+              value={td.value}
+              onChange={handleTodoChange}
+            />
+          ))}
       </div>
     </main>
   );
 };
 
-function useUpdateTodo(
-  inputVal: string,
-  updateInputVal: (val: string) => void
-) {
-  const [todoList, updateTodoList] = useState<Array<TodoObject>>([
-    { id: -1, value: "" }
-  ]);
+function useUpdateTodo(inputVal: string, updateInputVal: (val: string) => void) {
+  const [todoList, updateTodoList] = useState<Array<TodoObject>>([]);
   const [id, updateId] = useUUID(0);
 
   useEffect(() => {
@@ -76,12 +88,14 @@ function useUpdateTodo(
   }
 
   const addTodo = () => {
-    updateTodoList([...todoList, { value: inputVal, id }]);
+    if(!inputVal) return;
+
+    updateTodoList([...todoList, { value: inputVal, id } ]);
     updateId();
     updateInputVal("");
   };
 
-  return [todoList, addTodo] as const;
+  return [todoList, updateTodoList] as const;
 }
 
 function useUUID(initialValue: number) {
